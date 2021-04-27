@@ -12,11 +12,11 @@ jobs:
         uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@master
-        # with:
-        #   fetch-depth: 0
-      - name: update
-        run: |
-          git fetch --prune --unshallow
+        with:
+          fetch-depth: 100
+      # - name: update
+      #   run: |
+      #     git fetch --prune --unshallow
       - name: Get Previous tag
         id: previoustag
         uses: WyriHaximus/github-action-get-previous-tag@v1
