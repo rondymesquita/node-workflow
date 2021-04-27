@@ -6,7 +6,7 @@ on:
 
 jobs:
   release:
-    if: github.pusher.name != "github-actions"
+    if: ${{ github.pusher.name != "github-actions" }}
     runs-on: ubuntu-latest
     steps:
       - name: debug
