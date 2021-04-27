@@ -24,11 +24,19 @@ jobs:
         uses: WyriHaximus/github-action-next-semvers@v1
         with:
           version: ${{ steps.previoustag.outputs.tag }}
-      - run: echo ${{steps.previoustag.outputs.tag }}
-      - run: echo ${{steps.previoustag.outputs.timestamp }}
+      - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
+      - run: echo "previous timestamp" ${{steps.previoustag.outputs.timestamp }}
       - run: echo ${{steps.semvers.outputs.major }}
       - run: echo ${{steps.semvers.outputs.minor }}
       - run: echo ${{steps.semvers.outputs.patch }}
       - run: echo ${{steps.semvers.outputs.v_major }}
       - run: echo ${{steps.semvers.outputs.v_minor }}
       - run: echo ${{steps.semvers.outputs.v_patch }}
+      - name: 'Build Changelog'
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "changelog "  ${{steps.changelog.outputs.changelog }}
+      - run: echo "fromTag "    ${{steps.changelog.outputs.fromTag }}
+      - run: echo "toTag "      ${{steps.changelog.outputs.toTag }}
