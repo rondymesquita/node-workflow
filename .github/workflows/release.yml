@@ -58,17 +58,14 @@ jobs:
           tags: true
           branch: ${{ github.ref }}
           # github_token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{secrets.GITHUB_TOKEN}}
-      #     tags: true
-      #     branch: ${{ github.ref }}
-      # - name: 'Build Changelog'
-      #   id: changelog
-      #   uses: mikepenz/release-changelog-builder-action@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - run: echo "changelog "  ${{steps.changelog.outputs.changelog }}
+      - name: "Build Changelog"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          fromTag: ${{ steps.previoustag.outputs.tag }}
+          toTag: ${{steps.semvers.outputs.v_patch }}
+      - run: echo "changelog "  ${{steps.changelog.outputs.changelog }}
       # - run: echo "fromTag "    ${{steps.changelog.outputs.fromTag }}
       # - run: echo "toTag "      ${{steps.changelog.outputs.toTag }}
