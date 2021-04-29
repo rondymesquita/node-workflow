@@ -28,7 +28,7 @@ jobs:
       - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
       # - run: echo "PREV_TAG=$({{ steps.previoustag.outputs.tag }})" >> $GITHUB_ENV
       # - run: echo "NEXT_TAG=$({{ steps.semvers.outputs.v_patch }})" >> $GITHUB_ENV
-      - run: echo v${{ steps.previoustag.outputs.tag }}
+      - run: echo ${{ steps.previoustag.outputs.tag }}
       - run: echo ${{ steps.semvers.outputs.v_patch }}
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
@@ -42,6 +42,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          fromTag: v${{ steps.previoustag.outputs.tag }}
+          fromTag: ${{ steps.previoustag.outputs.tag }}
           toTag: ${{steps.semvers.outputs.v_patch }}
       - run: echo "changelog "${{steps.changelog.outputs.changelog }}
