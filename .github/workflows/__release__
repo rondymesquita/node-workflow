@@ -1,0 +1,97 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    # if: ${{ github.pusher.name != 'github-actions' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: debug
+        uses: hmarr/debug-action@v2
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+          # token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+        # with:
+        #   fetch-depth: 100
+      # - name: update
+      #   run: |
+      #     git fetch --prune --unshallow
+      - name: Get Previous tag
+        id: previoustag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+        with:
+          fallback: 0.0.1 # Optional fallback tag to use when no tag can be found
+      - name: Get next minor version
+        id: semvers
+        uses: WyriHaximus/github-action-next-semvers@v1
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+      - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
+      # - run: echo "previous timestamp" ${{steps.previoustag.outputs.timestamp }}
+      # - run: echo ${{steps.semvers.outputs.major }}
+      # - run: echo ${{steps.semvers.outputs.minor }}
+      - run: echo ${{steps.semvers.outputs.patch }}
+      # - run: echo ${{steps.semvers.outputs.v_major }}
+      # - run: echo ${{steps.semvers.outputs.v_minor }}
+      - run: echo ${{steps.semvers.outputs.v_patch }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Set git info
+        run: |
+          git config --local user.email "github-actions@users.noreply.github.com"
+          git config --local user.name "github-actions"
+      # - name: Set git info
+      #   run: |
+      #     git pull
+      - run: npm version ${{steps.semvers.outputs.v_patch }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
+          branch: ${{ github.ref }}
+          # github_token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+      - name: "Build Changelog"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # fromTag: ${{ steps.previoustag.outputs.tag }}
+          toTag: ${{steps.semvers.outputs.v_patch }}
+      - run: echo "changelog "  ${{steps.changelog.outputs.changelog }}
+      # - run: echo "fromTag "    ${{steps.changelog.outputs.fromTag }}
+      # - run: echo "toTag "      ${{steps.changelog.outputs.toTag }}
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: debug
+        uses: hmarr/debug-action@v2
+      - name: Get Previous tag
+        id: previoustag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+        with:
+          fallback: 0.0.1
+      - name: Get next minor version
+        id: semvers
+        uses: WyriHaximus/github-action-next-semvers@v1
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+      - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
+      - run: echo ${{steps.semvers.outputs.patch }}
+      - run: echo ${{steps.semvers.outputs.v_patch }}
+      - name: "Build Changelog"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # fromTag: ${{ steps.previoustag.outputs.tag }}
+          toTag: ${{steps.semvers.outputs.v_patch }}
