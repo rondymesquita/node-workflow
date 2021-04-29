@@ -30,6 +30,6 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
           event-type: print
           client-payload: '{"previous_tag": "${{ steps.previoustag.outputs.tag }}", "next_tag": "${{ steps.semvers.outputs.v_patch }}"}'
