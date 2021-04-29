@@ -26,11 +26,11 @@ jobs:
       - run: echo "PREV_TAG=$({{ steps.previoustag.outputs.tag }})" >> $GITHUB_ENV
       - run: echo "NEXT_TAG=$({{ steps.semvers.outputs.v_patch }})" >> $GITHUB_ENV
       - run: echo ${{steps.semvers.outputs.v_patch }}
-  changelog:
+  print:
     runs-on: ubuntu-latest
     steps:
-        - run: echo ${{ env.PREV_TAG }}
-        - run: echo ${{ env.NEXT_TAG }}
+      - run: echo ${{ env.PREV_TAG }}
+      - run: echo ${{ env.NEXT_TAG }}
       # - name: "Build Changelog"
       #   id: changelog
       #   uses: mikepenz/release-changelog-builder-action@v1
