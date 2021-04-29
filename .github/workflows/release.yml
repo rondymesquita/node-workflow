@@ -64,7 +64,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          fromTag: ${{ steps.previoustag.outputs.tag }}
+          # fromTag: ${{ steps.previoustag.outputs.tag }}
           toTag: ${{steps.semvers.outputs.v_patch }}
       - run: echo "changelog "  ${{steps.changelog.outputs.changelog }}
       # - run: echo "fromTag "    ${{steps.changelog.outputs.fromTag }}
