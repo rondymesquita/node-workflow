@@ -69,3 +69,29 @@ jobs:
       - run: echo "changelog "  ${{steps.changelog.outputs.changelog }}
       # - run: echo "fromTag "    ${{steps.changelog.outputs.fromTag }}
       # - run: echo "toTag "      ${{steps.changelog.outputs.toTag }}
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: debug
+        uses: hmarr/debug-action@v2
+      - name: Get Previous tag
+        id: previoustag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+        with:
+          fallback: 0.0.1
+      - name: Get next minor version
+        id: semvers
+        uses: WyriHaximus/github-action-next-semvers@v1
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+      - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
+      - run: echo ${{steps.semvers.outputs.patch }}
+      - run: echo ${{steps.semvers.outputs.v_patch }}
+      - name: "Build Changelog"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # fromTag: ${{ steps.previoustag.outputs.tag }}
+          toTag: ${{steps.semvers.outputs.v_patch }}
