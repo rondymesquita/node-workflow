@@ -1,0 +1,11 @@
+name: Repository Dispatch
+on:
+  repository_dispatch:
+    types: [print]
+
+jobs:
+  myEvent:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.event.client_payload.previous_tag }}
+      - run: echo ${{ github.event.client_payload.next_tag }}
