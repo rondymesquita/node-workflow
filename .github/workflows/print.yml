@@ -9,3 +9,12 @@ jobs:
     steps:
       - run: echo ${{ github.event.client_payload.previous_tag }}
       - run: echo ${{ github.event.client_payload.next_tag }}
+      - name: "Build Changelog"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          fromTag: v${{ steps.previoustag.outputs.tag }}
+          toTag: ${{steps.semvers.outputs.v_patch }}
+      - run: echo "changelog "${{steps.changelog.outputs.changelog }}

@@ -33,3 +33,12 @@ jobs:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           event-type: print
           client-payload: '{"previous_tag": "${{ steps.previoustag.outputs.tag }}", "next_tag": "${{ steps.semvers.outputs.v_patch }}"}'
+      - name: "Build Changelog"
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          fromTag: v${{ steps.previoustag.outputs.tag }}
+          toTag: ${{steps.semvers.outputs.v_patch }}
+      - run: echo "changelog "${{steps.changelog.outputs.changelog }}
