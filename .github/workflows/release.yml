@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  changelog:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: debug
@@ -27,11 +27,11 @@ jobs:
           version: ${{ steps.previoustag.outputs.tag }}
       - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
       - run: echo "next tag    " ${{ steps.semvers.outputs.v_patch }}
-      - run: npm version ${{steps.semvers.outputs.v_patch }}
       - name: Set git info
         run: |
-          git config --local user.email "github-actions@users.noreply.github.com"
-          git config --local user.name "github-actions"
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+      - run: npm version ${{steps.semvers.outputs.v_patch }}
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
