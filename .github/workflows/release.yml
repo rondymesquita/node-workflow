@@ -6,7 +6,6 @@ on:
 
 jobs:
   release:
-    if: ${{ github.event.head_commit.author.name != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - name: debug
@@ -14,28 +13,50 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
         with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          # persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
       - name: Get Previous tag
         id: previoustag
         uses: WyriHaximus/github-action-get-previous-tag@v1
         with:
-          fallback: 0.0.1
+          fallback: v0.0.1
       - name: Get next minor version
         id: semvers
         uses: WyriHaximus/github-action-next-semvers@v1
         with:
           version: ${{ steps.previoustag.outputs.tag }}
-      - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
+      - run: echo "previous tag" ${{ steps.previoustag.outputs.tag }}
       - run: echo "next tag    " ${{ steps.semvers.outputs.v_patch }}
       - name: Set git info
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-      - run: npm version ${{steps.semvers.outputs.v_patch }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Install changelog dependency
+        run: npm install -g generate-changelog
+      - name: Generate changelog
+        run: |
+          generate-changelog --tag ${{ steps.previoustag.outputs.tag }}
+          echo "CHANGELOG_BODY=$(cat CHANGELOG.md)" >> $GITHUB_ENV
+      - name: Add changelog to commit
+        run: |
+          git add CHANGELOG.md
+          git commit -m "docs(CHANGELOG): add changelog version ${{steps.semvers.outputs.v_patch}}"
+      - name: Update version
+        run: npm version ${{steps.semvers.outputs.v_patch }}
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          # github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           tags: true
           branch: ${{ github.ref }}
+      - name: Create Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.semvers.outputs.v_patch }}
+          release_name: ${{ steps.semvers.outputs.v_patch }}
+          body: ${{ env.CHANGELOG_BODY }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
