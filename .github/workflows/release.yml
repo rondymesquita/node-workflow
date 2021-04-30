@@ -40,10 +40,11 @@ jobs:
         run: |
           echo $GITHUB_ENV
           generate-changelog --tag ${{ steps.previoustag.outputs.tag }}..
-          CHANGELOG_BODY=$(cat CHANGELOG.md)
-          echo "$CHANGELOG_BODY" >> $GITHUB_ENV
-          echo $GITHUB_ENV
-          # echo "CHANGELOG_BODY=$(cat CHANGELOG.md)" >> $GITHUB_ENV
+      - name: Cat changelog
+        id: catchangelog
+        uses: pCYSl5EDgo/cat@master
+        with:
+          path: CHANGELOG.md
       - name: Add changelog to commit
         run: |
           git add CHANGELOG.md
@@ -61,6 +62,6 @@ jobs:
         with:
           tag_name: ${{ steps.semvers.outputs.v_patch }}
           release_name: ${{ steps.semvers.outputs.v_patch }}
-          body: ${{ env.CHANGELOG_BODY }}
+          body: ${{ steps.catchangelog.outputs.text }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
