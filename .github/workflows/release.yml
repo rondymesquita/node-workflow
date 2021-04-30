@@ -26,22 +26,15 @@ jobs:
         with:
           version: ${{ steps.previoustag.outputs.tag }}
       - run: echo "previous tag" ${{steps.previoustag.outputs.tag }}
-      # - run: echo "PREV_TAG=$({{ steps.previoustag.outputs.tag }})" >> $GITHUB_ENV
-      # - run: echo "NEXT_TAG=$({{ steps.semvers.outputs.v_patch }})" >> $GITHUB_ENV
-      - run: echo ${{ steps.previoustag.outputs.tag }}
-      - run: echo ${{ steps.semvers.outputs.v_patch }}
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
+      - run: echo "next tag    " ${{ steps.semvers.outputs.v_patch }}
+      - run: npm version ${{steps.semvers.outputs.v_patch }}
+      - name: Set git info
+        run: |
+          git config --local user.email "github-actions@users.noreply.github.com"
+          git config --local user.name "github-actions"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          event-type: print
-          client-payload: '{"previous_tag": "${{ steps.previoustag.outputs.tag }}", "next_tag": "${{ steps.semvers.outputs.v_patch }}"}'
-      - name: "Build Changelog"
-        id: changelog
-        uses: mikepenz/release-changelog-builder-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          fromTag: ${{ steps.previoustag.outputs.tag }}
-          toTag: ${{steps.semvers.outputs.v_patch }}
-      - run: echo "changelog "${{steps.changelog.outputs.changelog }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          tags: true
+          branch: ${{ github.ref }}
