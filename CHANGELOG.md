@@ -1,5 +1,15 @@
 #### 0.0.33 (2021-04-30)
 
+##### Bug Fixes
+
+*  changelog.yml ([98139bec](https://github.com/rondymesquita/workflow-node/commit/98139bec186e8bb154a8cf65a992f18ba80bdd3b))
+*  changelog.yml ([65828d51](https://github.com/rondymesquita/workflow-node/commit/65828d5115261c522ed70dafe01910a74c870419))
+*  changelog.yml ([f1ced1b8](https://github.com/rondymesquita/workflow-node/commit/f1ced1b86ee5116590b46b59c7fa754a73c4da00))
+*  changelog.yml ([90e8f034](https://github.com/rondymesquita/workflow-node/commit/90e8f03410f2b6e31d97a955bad80f30f65e5031))
+*  update readme ([bdbdcaa4](https://github.com/rondymesquita/workflow-node/commit/bdbdcaa4fb720a663fc89966eb5516181349e6a3))
+
+#### 0.0.33 (2021-04-30)
+
 ##### Chores
 
 *  update readme ([4193b4a9](https://github.com/rondymesquita/workflow-node/commit/4193b4a9402dcb303fc50f9ec7ac21c3fbc89ac6))
