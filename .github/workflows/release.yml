@@ -38,8 +38,12 @@ jobs:
         run: npm install -g generate-changelog
       - name: Generate changelog
         run: |
-          generate-changelog --tag ${{ steps.previoustag.outputs.tag }}
-          echo "CHANGELOG_BODY=$(cat CHANGELOG.md)" >> $GITHUB_ENV
+          echo $GITHUB_ENV
+          generate-changelog --tag ${{ steps.previoustag.outputs.tag }}..
+          CHANGELOG_BODY=$(cat CHANGELOG.md)
+          echo "$CHANGELOG_BODY" >> $GITHUB_ENV
+          echo $GITHUB_ENV
+          # echo "CHANGELOG_BODY=$(cat CHANGELOG.md)" >> $GITHUB_ENV
       - name: Add changelog to commit
         run: |
           git add CHANGELOG.md
