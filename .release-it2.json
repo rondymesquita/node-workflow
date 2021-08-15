@@ -1,0 +1,22 @@
+{
+  "dry-run": true,
+  "git": {
+    "requireCleanWorkingDir": false,
+    "commit": true,
+    "commitMessage": "Release ${version}",
+    "tag": true,
+    "tagAnnotation": "Release ${version}",
+    "push": true,
+    "pushArgs": ["--follow-tags"]
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release ${version}"
+  },
+  "npm": {
+    "publish": false
+  },
+  "gitlab": {
+    "release": false
+  }
+}

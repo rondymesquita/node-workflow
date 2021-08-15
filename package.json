@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "release-it --dry-run"
+    "release": "release-it --dry-run",
+    "changelog": "conventional-changelog -p conventionalcommits  -i CHANGELOG2.md -s -r 0",
+    "changelog2": "conventional-changelog --config .conventional-changelog.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,9 @@
   },
   "homepage": "https://github.com/rondymesquita/workflow-node#readme",
   "devDependencies": {
+    "@release-it/conventional-changelog": "^3.2.0",
+    "conventional-changelog": "^3.1.24",
+    "conventional-changelog-cli": "^2.1.1",
     "release-it": "^14.11.5"
   }
 }
