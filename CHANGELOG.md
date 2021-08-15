@@ -1,3 +1,15 @@
+#### 0.0.35 (2021-08-15)
+
+##### New Features
+
+* **SCOPE-1:**
+  *  testin ([433ca824](https://github.com/rondymesquita/workflow-node/commit/433ca824932c9b1a8c697c31057d982bcf56237c))
+  *  adds ([b323ed65](https://github.com/rondymesquita/workflow-node/commit/b323ed6599bcd9e5ceb55084e622aa804c2e7eee))
+
+##### Other Changes
+
+* //github.com/rondymesquita/workflow-node ([0b5118b9](https://github.com/rondymesquita/workflow-node/commit/0b5118b9aa25a67e4fbae5d195e858e132007533))
+
 #### 0.0.34 (2021-08-15)
 
 ##### Chores
