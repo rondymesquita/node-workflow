@@ -1,3 +1,11 @@
+#### 0.0.34 (2021-08-15)
+
+##### Chores
+
+* **SCOPE-1:**
+  *  testing stuff ([0003d331](https://github.com/rondymesquita/workflow-node/commit/0003d331dbc53ae11089f3cbf3a2043fc5b17275))
+  *  add files ([2765ed69](https://github.com/rondymesquita/workflow-node/commit/2765ed69c5ed21dd73ebaf3f7a0f550e33727f52))
+
 #### 0.0.33 (2021-04-30)
 
 ##### Bug Fixes
