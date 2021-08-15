@@ -2,11 +2,32 @@
   "plugins": {
     "@release-it/conventional-changelog": {
       "context": {
-        "linkCompare": false,
+        "groupBy": "scope",
+        "writerOpts": {
+          "groupBy": "scope"
+        }
+      },
+      "config": {
+        "groupBy": "scope",
+        "writerOpts": {
+          "groupBy": "scope"
+        }
+      },
+      "writerOpts": {
         "groupBy": "scope"
       },
       "ignoreRecommendedBump": true,
       "preset": {
+        "groupBy": "scope",
+        "writerOpts": {
+          "groupBy": "scope"
+        },
+        "config": {
+          "groupBy": "scope",
+          "writerOpts": {
+            "groupBy": "scope"
+          }
+        },
         "name": "conventionalcommits",
         "types": [
           { "type": "feat", "section": "Features" },

@@ -4,10 +4,18 @@ const fs = require("fs");
 
 const options = fs.readFileSync(".release-it2.json").toString();
 
-// conventionalChangelog({
-//   preset: "conventionalcommits",
-// }).pipe(process.stdout); // or any writable stream
+conventionalChangelog(
+  {
+    preset: "conventionalcommits",
+  },
+  {},
+  {},
+  {},
+  {
+    groupBy: "scope",
+  }
+).pipe(process.stdout); // or any writable stream
 
-release(options).then((output) => {
-  console.log(output);
-});
+// release(options).then((output) => {
+//   console.log(output);
+// });
