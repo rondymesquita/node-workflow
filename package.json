@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "release-it --dry-run"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/rondymesquita/workflow-node/issues"
   },
-  "homepage": "https://github.com/rondymesquita/workflow-node#readme"
+  "homepage": "https://github.com/rondymesquita/workflow-node#readme",
+  "devDependencies": {
+    "release-it": "^14.11.5"
+  }
 }
