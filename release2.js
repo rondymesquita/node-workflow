@@ -19,7 +19,7 @@ const config = conventionalcommits({
 config.then((c) => {
   conventionalChangelog(
     {
-      releaseCount: 4,
+      releaseCount: 5,
       config: c,
     },
     null,
