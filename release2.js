@@ -30,5 +30,3 @@ config.then((c) => {
     }
   ).pipe(process.stdout);
 });
-
-// conventionalChangelog(c).pipe(process.stdout);
