@@ -1,6 +1,8 @@
 {
   "dry-run": true,
+  "dryRun": true,
   "git": {
+    "changelog": "node release.js ${from} ${to} ${repo}",
     "requireCleanWorkingDir": false,
     "commit": true,
     "commitMessage": "Release ${version}",

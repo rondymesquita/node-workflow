@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "release:dev": "nodemon --exec npm run release -w release.js -w .release-it.json",
     "release": "release-it --dry-run",
     "changelog": "conventional-changelog -p conventionalcommits  -i CHANGELOG2.md -s -r 0",
     "changelog2": "conventional-changelog --config .conventional-changelog.js"
