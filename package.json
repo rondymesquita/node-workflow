@@ -1,11 +1,11 @@
 {
   "name": "workflow-node",
-  "version": "0.0.36",
+  "version": "1.0.36",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release:dev": "nodemon --exec npm run release -w release.js -w .release-it.json",
+    "release:dev": "nodemon --exec npm run release -w release.js -w .release-it.js -w ./conventional-changelog/index.js",
     "release": "release-it --dry-run",
     "changelog": "conventional-changelog -p conventionalcommits  -i CHANGELOG2.md -s -r 0",
     "changelog2": "conventional-changelog --config .conventional-changelog.js"
