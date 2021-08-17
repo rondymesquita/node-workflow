@@ -3,11 +3,7 @@ module.exports = {
   // "dryRun": true,
   "plugins": {
     "@release-it/conventional-changelog": {
-      // "ignoreRecommendedBump": true,
-      "context": {
-        // "version": "0.0.37",
-        "linkCompare": false
-      },
+      "ignoreRecommendedBump": true,
       // "gitRawCommitsOpts": {
       //   "merges": null
       // },
@@ -40,7 +36,7 @@ module.exports = {
     "commitMessage": "Release ${version}",
     "tag": true,
     "tagAnnotation": "Release ${version}",
-    "push": true,
+    "push": false,
     "pushArgs": ["--follow-tags"]
   },
   "github": {
