@@ -86,7 +86,7 @@ module.exports = {
     "commitMessage": "release: ${version}",
     "tag": true,
     "tagAnnotation": "Release ${version}",
-    "push": false,
+    "push": true,
     "pushArgs": ["--follow-tags"]
   },
   "github": {
