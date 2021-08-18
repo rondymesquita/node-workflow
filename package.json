@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release:dev": "nodemon --exec npm run release -w release.js -w .release-it.js -w ./conventional-changelog/index.js",
     "release": "release-it",
@@ -22,11 +23,14 @@
   },
   "homepage": "https://github.com/rondymesquita/workflow-node#readme",
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@release-it/conventional-changelog": "^3.2.0",
     "@types/conventional-changelog": "^3.1.1",
     "conventional-changelog": "^3.1.24",
     "conventional-changelog-cli": "^2.1.1",
     "conventional-changelog-conventionalcommits": "^4.6.0",
+    "husky": "^7.0.1",
     "release-it": "^14.11.5"
   }
 }

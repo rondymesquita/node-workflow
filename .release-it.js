@@ -60,8 +60,7 @@ module.exports = {
     "./conventional-changelog/index.js": {
       "ignoreRecommendedBump": true,
       "writerOpts": {
-        "groupBy": "scope",
-        "commitPartial": commitPartial
+        "groupBy": "scope"
       },
       "preset": {
         "name": "conventionalcommits",
