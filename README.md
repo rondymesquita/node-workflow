@@ -1,6 +1,5 @@
-# test
+# workflow-node
 
-## update2
-
-## doc 1
-### doc 1.1
+Simple node project using:
+- release-it
+- conventional-changelog
