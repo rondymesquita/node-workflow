@@ -66,12 +66,15 @@ module.exports = {
         "name": "conventionalcommits",
         "types": [
           { "type": "feat", "section": "Features" },
+          { "type": "build", "section": "Build Changes" },
           { "type": "fix", "section": "Bug Fixes" },
           { "type": "chore", "section": "Chores" },
-          { "type": "docs", "section": "Docos" },
+          { "type": "ci", "section": "CI Configuration" },
+          { "type": "docs", "section": "Docs" },
           { "type": "style", "section": "Code Style" },
           { "type": "refactor", "section": "Refactors" },
           { "type": "perf", "section": "Performance" },
+          { "type": "revert", "section": "Reverts" },
           { "type": "test", "section": "Tests" }
         ]
       }
@@ -80,7 +83,7 @@ module.exports = {
   "git": {
     "requireCleanWorkingDir": false,
     "commit": true,
-    "commitMessage": "Release ${version}",
+    "commitMessage": "release: ${version}",
     "tag": true,
     "tagAnnotation": "Release ${version}",
     "push": false,
