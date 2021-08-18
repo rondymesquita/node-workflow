@@ -1,6 +1,3 @@
-# test
+# workflow-node
 
-## update2
-
-## doc 1
-### doc 1.1
+simple node project that uses release-it
