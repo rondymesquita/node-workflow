@@ -74,8 +74,8 @@ module.exports = {
           { "type": "style", "section": "Code Style" },
           { "type": "refactor", "section": "Refactors" },
           { "type": "perf", "section": "Performance" },
-          { "type": "revert", "section": "Reverts" },
-          { "type": "test", "section": "Tests" }
+          { "type": "test", "section": "Tests" },
+          { "type": "release", "section": "Releases" }
         ]
       }
     }
