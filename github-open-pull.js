@@ -1,4 +1,13 @@
-const args = process.argv.slice(2)
+// const args = process.argv.slice(2)
+// const args = [
+//   'workflow-node',
+//   'v0.0.42',
+//   'rondymesquita/workflow-node',
+//   '*',
+//   'release:',
+//   '0.0.41',
+//   '(ab09c78)'
+// ]
 
 const [name, version, repository ] = args
 const changelog = args.slice(2).join()
