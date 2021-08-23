@@ -1,13 +1,13 @@
 {
   "name": "workflow-node",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "",
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release:dev": "nodemon --exec npm run release -w release.js -w .release-it.js -w ./conventional-changelog/index.js",
-    "release": "release-it --dry-run -VV",
+    "release": "release-it -VV",
     "changelog": "conventional-changelog -p conventionalcommits -r 0",
     "changelog2": "conventional-changelog --config .conventional-changelog.js"
   },
