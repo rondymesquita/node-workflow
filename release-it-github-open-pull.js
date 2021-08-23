@@ -8,7 +8,10 @@ class MyPlugin extends Plugin {
   }
   async beforeRelease() {
     const context = this.config.getContext();
-    // console.log("beforeRelease", context);
+    console.log("beforeRelease", context);
+    const { version, changelog } = context;
+    const { pullTitle } = this.options;
+    console.log("beforeRelease", pullTitle);
     // console.log("beforeRelease", Object.keys(this.config.getContext()));
     // console.log("beforeRelease", context.changelog);
 
@@ -22,6 +25,7 @@ class MyPlugin extends Plugin {
           head: "dev",
           base: "main",
           body: context.changelog,
+          title: "Release: v" + version,
         }
       );
       console.log(response.status);

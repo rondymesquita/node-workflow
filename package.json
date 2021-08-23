@@ -1,6 +1,6 @@
 {
   "name": "workflow-node",
-  "version": "0.0.70",
+  "version": "0.0.73",
   "description": "",
   "main": "index.js",
   "scripts": {
