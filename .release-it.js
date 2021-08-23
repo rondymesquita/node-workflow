@@ -53,55 +53,59 @@ const commitPartial = `
     {{~/if}}
     {{~this.repository}}#{{this.issue}}
   {{~/if}}{{/each}}
-{{~/if}}`
+{{~/if}}`;
 
 module.exports = {
-  "plugins": {
+  plugins: {
     "@release-it/conventional-changelog": {
-      "ignoreRecommendedBump": true,
-      "writerOpts": {
-        "groupBy": "scope",
-        "commitPartial": commitPartial
+      ignoreRecommendedBump: true,
+      writerOpts: {
+        groupBy: "scope",
+        commitPartial: commitPartial,
       },
-      "preset": {
-        "name": "conventionalcommits",
-        "types": [
-          { "type": "feat", "section": "Features" },
-          { "type": "build", "section": "Build Changes" },
-          { "type": "fix", "section": "Bug Fixes" },
-          { "type": "chore", "section": "Chores" },
-          { "type": "ci", "section": "CI Configuration" },
-          { "type": "docs", "section": "Docs" },
-          { "type": "style", "section": "Code Style" },
-          { "type": "refactor", "section": "Refactors" },
-          { "type": "perf", "section": "Performance" },
-          { "type": "test", "section": "Tests" },
-          { "type": "release", "section": "Releases" }
-        ]
-      }
-    }
+      preset: {
+        name: "conventionalcommits",
+        types: [
+          { type: "feat", section: "Features" },
+          { type: "build", section: "Build Changes" },
+          { type: "fix", section: "Bug Fixes" },
+          { type: "chore", section: "Chores" },
+          { type: "ci", section: "CI Configuration" },
+          { type: "docs", section: "Docs" },
+          { type: "style", section: "Code Style" },
+          { type: "refactor", section: "Refactors" },
+          { type: "perf", section: "Performance" },
+          { type: "test", section: "Tests" },
+          { type: "release", section: "Releases" },
+        ],
+      },
+    },
+    "./release-it-github-open-pull.js": {
+      key: "value",
+    },
   },
-  "git": {
-    "requireCleanWorkingDir": false,
-    "commit": false,
-    "commitMessage": "release: ${version}",
-    "tag": false,
-    "tagAnnotation": "Release ${version}",
-    "push": false,
-    "pushArgs": ["--follow-tags"]
+  git: {
+    requireCleanWorkingDir: false,
+    commit: false,
+    commitMessage: "release: ${version}",
+    tag: false,
+    tagAnnotation: "Release ${version}",
+    push: false,
+    pushArgs: ["--follow-tags"],
   },
-  "github": {
-    "release": true,
-    "releaseName": "Release ${version}"
+  github: {
+    release: true,
+    releaseName: "Release ${version}",
   },
-  "npm": {
-    "publish": false
+  npm: {
+    publish: false,
   },
-  "gitlab": {
-    "release": false
+  gitlab: {
+    release: false,
   },
-  "hooks": {
+  hooks: {
     // "after:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog.toString()}",
-    "after:release": "node github-open-pull.js ${changelog.replace(/\\n/g, '@LINE_BREAK@').replace(/\\s/g, '@SPACE@')}"
-  }
-}
+    // "after:release":
+    // "node github-open-pull.js ${changelog.replace(/\\n/g, '@LINE_BREAK@').replace(/\\s/g, '@SPACE@')}",
+  },
+};
