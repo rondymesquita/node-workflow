@@ -86,11 +86,11 @@ module.exports = {
   },
   git: {
     requireCleanWorkingDir: false,
-    commit: false,
+    commit: true,
     commitMessage: "release: ${version}",
-    tag: false,
+    tag: true,
     tagAnnotation: "Release ${version}",
-    push: false,
+    push: true,
     pushArgs: ["--follow-tags"],
   },
   github: {
