@@ -7,7 +7,7 @@
     "prepare": "husky install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release:dev": "nodemon --exec npm run release -w release.js -w .release-it.js -w ./conventional-changelog/index.js",
-    "release": "release-it -VV",
+    "release": "release-it",
     "changelog": "conventional-changelog -p conventionalcommits -r 0",
     "changelog2": "conventional-changelog --config .conventional-changelog.js"
   },
