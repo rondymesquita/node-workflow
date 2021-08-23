@@ -104,6 +104,8 @@ module.exports = {
     // "after:git:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog}",
     // "before:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog}",
     // "before:init": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog}"
-    "after:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog}"
+    "before:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog}",
+    "after:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog}",
+    "after:version:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog}"
   }
 }
