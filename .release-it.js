@@ -57,7 +57,7 @@ const commitPartial = `
 
 module.exports = {
   "plugins": {
-    "./conventional-changelog/index.js": {
+    "@release-it/conventional-changelog": {
       "ignoreRecommendedBump": true,
       "writerOpts": {
         "groupBy": "scope",
