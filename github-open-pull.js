@@ -1,4 +1,4 @@
-// const args = process.argv.slice(2)
+const args = process.argv.slice(2)
 // const args = [
 //   'workflow-node',
 //   'v0.0.42',
