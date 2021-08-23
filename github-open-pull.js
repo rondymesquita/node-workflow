@@ -8,15 +8,16 @@ const args = process.argv.slice(2)
 //   '(2021-08-23)'
 // ]
 console.log('>>>', args);
-const cl = `### [0.0.44](https://github.com/rondymesquita/workflow-node/compare/v0.0.43...v0.0.44) (2021-08-23)
+// const cl = `### [0.0.44](https://github.com/rondymesquita/workflow-node/compare/v0.0.43...v0.0.44) (2021-08-23)
 
 
-### SCOPE-1
+// ### SCOPE-1
 
 
-* chore(SCOPE-1): testing to open PR automatically ([d803ef5](https://github.com/rondymesquita/workflow-node/commit/d803ef5fbf48dfc704e19e368fbb9711ba93ea38))`
-
-// console.log(`${cl.replace(/\n/g)}`);
+// * chore(SCOPE-1): testing to open PR automatically ([d803ef5](https://github.com/rondymesquita/workflow-node/commit/d803ef5fbf48dfc704e19e368fbb9711ba93ea38))`
+const changelog = args[0]
+console.log(changelog)
+console.log(`${changelog.replace(/@LINE_BREAK@/g , /\\n/).replace(/@SPACE@/g , /\\s/)}`);
 // console.log(cl.replace(//g, ""))
 // const args = ["workflow-none", "v0.0.42", "rondy", cl]
 

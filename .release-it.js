@@ -83,11 +83,11 @@ module.exports = {
   },
   "git": {
     "requireCleanWorkingDir": false,
-    "commit": true,
+    "commit": false,
     "commitMessage": "release: ${version}",
-    "tag": true,
+    "tag": false,
     "tagAnnotation": "Release ${version}",
-    "push": true,
+    "push": false,
     "pushArgs": ["--follow-tags"]
   },
   "github": {
@@ -102,6 +102,6 @@ module.exports = {
   },
   "hooks": {
     // "after:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog.toString()}",
-    "before:version": "node github-open-pull.js ${changelog.toString()} ${typeof changelog}"
+    "after:release": "node github-open-pull.js ${changelog.replace(/\\n/g, '@LINE_BREAK@').replace(/\\s/g, '@SPACE@')}"
   }
 }
