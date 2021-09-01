@@ -21,7 +21,7 @@ class MyPlugin extends Plugin {
       title: 'Release: ' + tagName
     }
 
-    this.log.verbose('Creating PR with options', body)
+    this.log.verbose('Creating PR')
     try {
       const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
       const endpoint = `/repos/${repo.repository}/pulls`
