@@ -21,33 +21,25 @@ class MyPlugin extends Plugin {
       title: 'Release: ' + tagName
     }
 
-    this.log.verbose('Creating PR with options %o', body)
+    this.log.verbose('Creating PR with options', body)
     try {
       const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
       const response = await octokit.request(
         'POST /repos/rondymesquita/workflow-node/pulls', body
       )
-      this.log.log('PR created', response.data, response.status)
+      const { url } = response.data
+      this.log.verbose('PR created and available on', url)
     } catch (err) {
       this.log.error('Error when creating Pull')
       this.log.error('Status: ', err.status)
       this.log.error('Response: ', err.response.data)
-      this.log.error('Errors: ', err.response.data.errors)
     }
   }
 
   async afterRelease () {
     const context = this.config.getContext()
-    console.log('beforeRelease2', context)
     const {  changelog, repo, tagName } = context
     const { base } = this.options
-    console.log('beforeRelease3', {
-      tagName,
-      repo,
-      changelog,
-      base
-    })
-
     const isDryRun = context['dry-run']
     if (!isDryRun) {
       await this._createPull({
