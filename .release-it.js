@@ -81,7 +81,7 @@ module.exports = {
       },
     },
     "./release-it-github-open-pull.js": {
-      pullTitle: "Release ${version}",
+      base: "main"
     },
   },
   git: {

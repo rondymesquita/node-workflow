@@ -7,19 +7,17 @@ class MyPlugin extends Plugin {
   }
 
   async _createPull ({
-    pullTitle,
-    version,
     tagName,
-    name,
     repo,
-    changelog
+    changelog,
+    base
   }) {
     const currentBranchName = await this.exec('git branch --show-current', { options: { write: false } });
     const body = {
       owner: repo.owner,
       repo: repo.project,
       head: currentBranchName,
-      base: 'development',
+      base: base,
       body: changelog,
       title: 'Release: ' + tagName
     }
@@ -42,15 +40,13 @@ class MyPlugin extends Plugin {
   async afterRelease () {
     const context = this.config.getContext()
     console.log('beforeRelease2', context)
-    const { version, changelog, repo, name, tagName } = context
-    const { pullTitle } = this.options
+    const {  changelog, repo, name, tagName } = context
+    const { pullTitle, base } = this.options
     console.log('beforeRelease3', {
-      pullTitle,
-      version,
       tagName,
-      name,
       repo,
-      changelog
+      changelog,
+      base
     })
 
     const isDryRun = context['dry-run']
@@ -63,7 +59,6 @@ class MyPlugin extends Plugin {
       })
     } else {
       this.log.verbose('Running in dry-run mode. No PR will be created')
-
     }
   }
 }
