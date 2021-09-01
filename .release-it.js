@@ -63,6 +63,10 @@ module.exports = {
         groupBy: "scope",
         commitPartial: commitPartial,
       },
+      parserOpts: {
+        mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+        mergeCorrespondence: ['id', 'source']
+      },
       preset: {
         name: "conventionalcommits",
         types: [
