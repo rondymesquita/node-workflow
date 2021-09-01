@@ -24,8 +24,9 @@ class MyPlugin extends Plugin {
     this.log.verbose('Creating PR with options', body)
     try {
       const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
+      const endpoint = `/repos/${repo.repository}/pulls`
       const response = await octokit.request(
-        'POST /repos/rondymesquita/workflow-node/pulls', body
+        `POST ${endpoint}`, body
       )
       const { html_url: htmlUrl } = response.data
       this.log.verbose('PR created and available on', htmlUrl)
