@@ -3,7 +3,6 @@ const { Octokit, App, Action } = require('octokit')
 
 class MyPlugin extends Plugin {
   init () {
-    // this.octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   }
 
   async _createPull ({
@@ -41,7 +40,7 @@ class MyPlugin extends Plugin {
     const context = this.config.getContext()
     console.log('beforeRelease2', context)
     const {  changelog, repo, name, tagName } = context
-    const { pullTitle, base } = this.options
+    const { base } = this.options
     console.log('beforeRelease3', {
       tagName,
       repo,
