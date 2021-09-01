@@ -88,6 +88,7 @@ module.exports = {
     requireCleanWorkingDir: false,
     commit: true,
     commitMessage: "release: ${version}",
+    commitArgs: ["--no-verify"],
     tag: true,
     tagAnnotation: "Release ${version}",
     push: true,

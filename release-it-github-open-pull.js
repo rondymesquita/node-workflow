@@ -27,8 +27,8 @@ class MyPlugin extends Plugin {
       const response = await octokit.request(
         'POST /repos/rondymesquita/workflow-node/pulls', body
       )
-      const { url } = response.data
-      this.log.verbose('PR created and available on', url)
+      const { html_url: htmlUrl } = response.data
+      this.log.verbose('PR created and available on', htmlUrl)
     } catch (err) {
       this.log.error('Error when creating Pull')
       this.log.error('Status: ', err.status)
