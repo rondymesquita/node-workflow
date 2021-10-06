@@ -1,58 +1,72 @@
-const { Plugin } = require('release-it')
-const { Octokit, App, Action } = require('octokit')
+const { Plugin } = require('release-it');
+const { Octokit } = require('octokit');
 
-class MyPlugin extends Plugin {
-  init () {
-  }
 
-  async _createPull ({
-    changelog,
-    tagName,
-    repo,
-    base
-  }) {
-    const currentBranchName = await this.exec('git branch --show-current', { options: { write: false } });
-    const body = {
-      owner: repo.owner,
-      repo: repo.project,
-      head: currentBranchName,
-      base: base,
-      body: changelog,
-      title: 'Release: ' + tagName
-    }
+const { log, error } = console;
+const createPull = async function({
+  changelog,
+  tagName,
+  repo,
+  base,
+  isDryRun,
+  currentBranchName,
+}) {
+  const body = {
+    owner: repo.owner,
+    repo: repo.project,
+    head: currentBranchName,
+    base,
+    body: changelog,
+    title: `Release: ${tagName} on ${base}`,
+  };
 
-    this.log.verbose('Creating PR')
-    try {
-      const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
-      const endpoint = `/repos/${repo.repository}/pulls`
+  log('Creating PR [%s] from branch [%s]', body.title, currentBranchName);
+  log('PR options', { body });
+  try {
+    if (!isDryRun) {
+      const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+      const endpoint = `/repos/${repo.repository}/pulls`;
       const response = await octokit.request(
         `POST ${endpoint}`, body
-      )
-      const { html_url: htmlUrl } = response.data
-      this.log.verbose('PR created and available on', htmlUrl)
-    } catch (err) {
-      this.log.error('Error when creating Pull')
-      this.log.error('Status: ', err.status)
-      this.log.error('Response: ', err.response.data)
+      );
+      const { html_url: htmlUrl } = response.data;
+      log('PR created and available on', htmlUrl);
     }
+  } catch (err) {
+    error('Error when creating Pull');
+    error('Status: ', err.status);
+    error('Response: ', err.response.data);
   }
+};
+class GithubOpenPullPlugin extends Plugin {
+  async afterRelease() {
+    const context = this.config.getContext();
+    const isDryRun = context['dry-run'];
+    const { changelog, repo, tagName } = context;
+    const { bases } = this.options;
 
-  async afterRelease () {
-    const context = this.config.getContext()
-    const {  changelog, repo, tagName } = context
-    const { base } = this.options
-    const isDryRun = context['dry-run']
-    if (!isDryRun) {
-      await this._createPull({
+    const currentBranchName = await this.exec('git rev-parse --abbrev-ref HEAD', { options: { write: false } });
+
+    this.log.verbose('Options', JSON.stringify({
+      repo,
+      tagName,
+      bases,
+      isDryRun,
+      token: process.env.GITHUB_TOKEN,
+    }, null, 2));
+
+    const pullPromises = bases.map(async (base) => {
+      await createPull({
         changelog,
         tagName,
         repo,
-        base
-      })
-    } else {
-      this.log.verbose('Running in dry-run mode. No PR will be created')
-    }
+        base,
+        isDryRun,
+        currentBranchName,
+      });
+    });
+    await Promise.all(pullPromises);
   }
 }
 
-module.exports = MyPlugin
+module.exports = GithubOpenPullPlugin;
