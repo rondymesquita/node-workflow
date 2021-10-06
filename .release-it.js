@@ -1,116 +1,73 @@
-const commitPartial = `
-* {{header}}
+const commitPartial = `* **{{raw.type}}({{scope}})**: {{subject}} ([{{~shortHash}}]({{~@root.host}}/{{~@root.owner}}/{{~@root.repository}}/{{~@root.commit}}/{{hash}}))
+`
 
-{{~!-- commit link --}} {{#if @root.linkReferences~}}
-  ([{{shortHash}}](
-  {{~#if @root.repository}}
-    {{~#if @root.host}}
-      {{~@root.host}}/
-    {{~/if}}
-    {{~#if @root.owner}}
-      {{~@root.owner}}/
-    {{~/if}}
-    {{~@root.repository}}
-  {{~else}}
-    {{~@root.repoUrl}}
-  {{~/if}}/
-  {{~@root.commit}}/{{hash}}))
-{{~else}}
-  {{~hash}}
-{{~/if}}
+const mainTemplate = `
+{{> header}}
 
-{{~!-- commit references --}}
-{{~#if references~}}
-  , closes
-  {{~#each references}} {{#if @root.linkReferences~}}
-    [
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}#{{this.issue}}](
-    {{~#if @root.repository}}
-      {{~#if @root.host}}
-        {{~@root.host}}/
-      {{~/if}}
-      {{~#if this.repository}}
-        {{~#if this.owner}}
-          {{~this.owner}}/
-        {{~/if}}
-        {{~this.repository}}
-      {{~else}}
-        {{~#if @root.owner}}
-          {{~@root.owner}}/
-        {{~/if}}
-          {{~@root.repository}}
-        {{~/if}}
-    {{~else}}
-      {{~@root.repoUrl}}
-    {{~/if}}/
-    {{~@root.issue}}/{{this.issue}})
-  {{~else}}
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}#{{this.issue}}
-  {{~/if}}{{/each}}
-{{~/if}}`;
+{{#each commitGroups}}
+
+{{#if title}}
+### [{{title}}]({{title}})
+{{/if}}
+{{#each commits}}
+{{> commit root=@root}}
+{{/each}}
+
+{{/each}}
+`
 
 module.exports = {
-  plugins: {
+  "plugins": {
     "@release-it/conventional-changelog": {
-      ignoreRecommendedBump: true,
-      writerOpts: {
-        groupBy: "scope",
-        commitPartial: commitPartial,
+      "ignoreRecommendedBump": true,
+      "writerOpts": {
+        "groupBy": "scope",
+        "mainTemplate": mainTemplate,
+        "commitPartial": commitPartial
       },
-      parserOpts: {
-        mergePattern: /^Merge pull request #(\d+) from (.*)$/,
-        mergeCorrespondence: ['id', 'source']
+      "parserOpts": {
+        "mergePattern": /^Merge pull request #(\d+) from (.*)$/,
+        "mergeCorrespondence": ['id', 'source']
       },
-      preset: {
-        name: "conventionalcommits",
-        types: [
-          { type: "feat", section: "Features" },
-          { type: "build", section: "Build Changes" },
-          { type: "fix", section: "Bug Fixes" },
-          { type: "chore", section: "Chores" },
-          { type: "ci", section: "CI Configuration" },
-          { type: "docs", section: "Docs" },
-          { type: "style", section: "Code Style" },
-          { type: "refactor", section: "Refactors" },
-          { type: "perf", section: "Performance" },
-          { type: "test", section: "Tests" },
-          { type: "release", section: "Releases" },
-        ],
-      },
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          { "type": "feat", "section": "Features" },
+          { "type": "build", "section": "Build Changes" },
+          { "type": "fix", "section": "Bug Fixes" },
+          { "type": "chore", "section": "Chores" },
+          { "type": "ci", "section": "CI Configuration" },
+          { "type": "docs", "section": "Docs" },
+          { "type": "style", "section": "Code Style" },
+          { "type": "refactor", "section": "Refactors" },
+          { "type": "perf", "section": "Performance" },
+          { "type": "test", "section": "Tests" },
+          { "type": "release", "section": "Releases" }
+        ]
+      }
     },
     "./release-it-github-open-pull.js": {
-      base: "main"
-    },
+      "bases": ["main"]
+    }
   },
-  git: {
-    requireCleanWorkingDir: false,
-    commit: true,
-    commitMessage: "release: ${version}",
-    commitArgs: ["--no-verify"],
-    tag: true,
-    tagAnnotation: "Release ${version}",
-    push: true,
-    pushArgs: ["--follow-tags"],
+  "git": {
+    "requireCleanWorkingDir": false,
+    "commit": true,
+    "commitMessage": "release: ${version}",
+    "commitArgs": ["--no-verify"],
+    "tag": true,
+    "tagAnnotation": "Release ${version}",
+    "push": true,
+    "pushArgs": ["--follow-tags"]
   },
-  github: {
-    release: true,
-    releaseName: "Release ${version}",
+  "github": {
+    "release": true,
+    "releaseName": "Release ${version}"
   },
-  npm: {
-    publish: false,
+  "npm": {
+    "publish": false
   },
-  gitlab: {
-    release: false,
-  },
-  hooks: {
-    // "after:release": "node github-open-pull.js ${name} v${version} ${repo.repository} ${changelog.toString()}",
-    // "after:release":
-    // "node github-open-pull.js ${changelog.replace(/\\n/g, '@LINE_BREAK@').replace(/\\s/g, '@SPACE@')}",
-  },
-};
+  "gitlab": {
+    "release": false
+  }
+}
